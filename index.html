@@ -1,0 +1,64 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!--todo'
+        float bottom row of word(s)
+        touch input
+        better layout
+        lerp drawing
+        ragdoll
+
+    -->
+	<title>Hangman</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+-->
+    <script src="jquery-3.1.1.slim.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="main.css">
+    <script src="drawman.js"></script>
+ 	<script>
+	  	var gameDiv;
+	  	$(document).ready(function(){
+			gameDiv = $("#gameContainer");
+			init();
+			resize();
+		});
+
+		$(window).on("resize", resize);
+
+		function resize(){
+			gameDiv.height(gameDiv.width());
+		}
+ 	</script>
+ 	<script src="hangman.js"></script>
+</head>
+
+<body>
+ 	<div id="gameContainer">
+		<div id="inputContainer">
+			<label for="wordInput">Enter your word:</label>
+	  		<input type="text" id="wordInput">
+			<button id="submitWord">Start Game</button>
+ 		</div>
+		<div id="allLetters">
+			<div id="vowels" class="clearfix">
+			</div>
+			<div id="consonants" class="clearfix">
+			</div>
+			<button id="showLetters" class="allLettersToggle">Show</button>
+			<button id="hideLetters" class="allLettersToggle">Hide</button>
+		</div>
+
+
+        <canvas id="drawCanvas" width=600 height=400></canvas>
+
+		<div id="letterContainer">
+		</div>
+		<button id="resetButton">New Game</button>
+ 	</div>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+button{
+	background: white;
+	color: black;
+	text-transform: uppercase;
+	font-family: helvetica;
+
+	height: 2em;
+	font-size: 1em;
+	padding: 0.5em;
+	border: none;
+	cursor: pointer;
+}
+canvas{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    transform-origin:left;
+    transform: scale(1);
+    transition: transform 0.5s ease-out;
+}
+canvas.minimized{
+    transform: scale(0.5);
+}
+#gameContainer{
+	width: 600px;
+	max-width: 95vw;
+	border: 1px solid black;
+	margin: 10px auto;
+	position: relative;
+	overflow: hidden;
+}
+#inputContainer{
+	position: absolute;
+	left: 0;
+	top: 25%;
+	width: 100%;
+	height: 100%;
+}
+#inputContainer > *{
+	text-align: center;
+	display: block;
+	margin: 10px auto;
+}
+#letterContainer{
+	position: relative;
+	top: 75%;
+}
+#resetButton{
+	position:absolute;
+	bottom: 0;
+	right: 0;
+}
+#allLetters{
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin: 10px 0;
+	width: 50%;
+    padding: 15px 0;
+	transform: translateX(100%);
+	transition: transform 0.5s ease-out;
+}
+#allLetters.showing{
+	transform: translateX(0);
+}
+#allLetters #showLetters,
+#allLetters.showing #hideLetters{
+	display: block;
+}
+#allLetters.showing #showLetters,
+#allLetters #hideLetters,
+#gameContainer #allLetters > .allLettersToggle.hidden{
+	display: none;
+}
+#vowels{
+	width: 60%;
+	margin: 0 auto;
+}
+#consonants{
+	width: 95%;
+	margin: 0 auto;
+}
+.allLettersToggle{
+	position:absolute;
+	top: 50%;
+	left: 0;
+    transform: translateX(-75%) rotate(-90deg);
+	width: 40%;
+}
+.letter{
+	font-size: 3em;
+    padding: 5px 0;
+	text-align: center;
+	margin: 0 auto;
+	display: block;
+	float: left;
+    background: white;
+    cursor: pointer;
+    width: 20%;
+}
+.right{
+	background: green;
+}
+.wrong{
+	background: red;
+}
+.letterCell{
+	box-sizing:border-box;
+	position: relative;
+	float: left;
+	text-align: center;
+	font-size: 3em;
+}
+.letterCell > span{
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}
+.letterCell > span.showing{
+	opacity: 1;
+}
+.letterCell > div{
+	display: block;
+	position: absolute;
+	height: 2px;
+	width: 80%;
+	margin: 0 10%;
+	top:100%;
+	left: 0;
+	transform: scaleX(0);
+	transform-origin: center left;
+	background: black;
+	transition: transform 0.4s ease;
+}
+.letterCell.expanded > div{
+	transform: scaleX(1);
+}
+
+.shake{
+	animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+}
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/*#allLetters{
+
+}
+#vowels .letter,
+#consonants .letter {
+    width: 20%;
+}*/
+
+@media (max-width:480px){
+	.letter{
+		font-size: 8vw;
+	}
+	.letterCell{
+		font-size: 8vw;
+	}
+}
+
+@keyframes shake{
+	10%, 90% {
+	    transform: translate3d(-1px, 0, 0);
+	}
+
+	20%, 80% {
+	    transform: translate3d(2px, 0, 0);
+	}
+
+	30%, 50%, 70% {
+	    transform: translate3d(-4px, 0, 0);
+	}
+
+	40%, 60% {
+	    transform: translate3d(4px, 0, 0);
+	}
+}
