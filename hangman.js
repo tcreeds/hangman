@@ -93,13 +93,9 @@ function addLetters(phrase, mod)
     for (var j = 0; j < words.length; j++)
     {
         var word = words[j];
-        if (lettersInRow > 0)
-        {
-            addWord(row, " ");
-            lettersInRow++;
-        }
+        var projectedLength = word.length + lettersInRow + (lettersInRow > 0 ? 1 : 0);
         //check if word should be wrapped (shorter than lineWidth, but would make lettersInRow greater than lineWidth)
-        if (word.length <= lineWidth && word.length + lettersInRow > lineWidth)
+        if (word.length <= lineWidth && projectedLength > lineWidth)
         {
             row = addRow(row, mod);
             addWord(row, word);
@@ -116,6 +112,11 @@ function addLetters(phrase, mod)
             isOnlyRow = false;
         }
         else {
+            if (lettersInRow > 0)
+            {
+                addWord(row, " ");
+                lettersInRow++;
+            }
             addWord(row, word);
             lettersInRow += word.length;
         }
@@ -139,7 +140,9 @@ function sizeRow(row, isOnlyRow)
 function addRow(row, mod)
 {
     if (row)
+    {
         sizeRow(row);
+    }
     var r = $("<div class='letterRow clearfix' lineWidth='" + mod + "'></div>");
     letterContainer.append(r);
     return r;
@@ -152,7 +155,7 @@ function addWord(row, word)
     {
         var div = $("<div class='letterCell'></div>");
         if (word.charAt(i) == " "){
-            div.append($("<span class='showing'>&nbsp;</span>"));
+            div.append($("<span style='opacity: 1;'>&nbsp;</span>"));
             div.append("<div style='background: none;'></div>")
         }
         else if (word.charAt(i) == "-"){
@@ -262,7 +265,7 @@ function badGuess()
 
 function checkCompleted()
 {
-	if ($(".letterCell > span.showing", letterContainer).length == currentWord.length)
+	if ($(".letterCell > span.showing", letterContainer).length == currentWord.replace(/ /g, "").length)
 		return true;
 	return false;
 }
