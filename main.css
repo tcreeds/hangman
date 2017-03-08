@@ -143,6 +143,11 @@ input{
 .letterCell.expanded > div{
 	transform: scaleX(1);
 }
+.letterRow{
+    //padding: 0 2%;
+    margin: 0 auto;
+    width: 100%;
+}
 
 .shake{
 	animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;

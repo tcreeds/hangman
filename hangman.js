@@ -1,4 +1,4 @@
-var word = "";
+var currentWord = "";
 var vowels = ['A', 'E', 'I', 'O', 'U'];
 var consonants = ['B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z'];
 var wordInput;
@@ -9,6 +9,7 @@ var resetButton;
 var showLetters;
 var failedAttempts;
 var maxAttempts = 7;
+var maxLineWidth = 15;
 var $canvas;
 
 function init(){
@@ -59,23 +60,9 @@ function initGetWord(){
 
 function initGuessWord(){
 	//max letters per line is 15
-	var mod = Math.max(100 / word.length, 100 / 15);
+	var mod = Math.max(100 / currentWord.length, 100 / maxLineWidth);
 
-	var width = mod + "%";
-	for (var i = 0; i < word.length; i++)
-	{
-		var div = $("<div class='letterCell'></div>");
-		div.width(width);
-		if (word.charAt(i) == " "){
-			div.append($("<span class='showing'>&nbsp;</span>"));
-			div.append("<div style='background: none;'></div>")
-		}
-		else{
-			div.append($("<span>" + word.charAt(i) + "</span>"));
-			div.append("<div style='transition-delay: " + mod/100*i + "s;'></div>")
-		}
-		letterContainer.append(div);
-	}
+	addLetters(currentWord, mod);
 
 	failedAttempts = 0;
 
@@ -93,11 +80,98 @@ function initGuessWord(){
 	}, 500);
 }
 
+function addLetters(phrase, mod)
+{
+    var lineWidth = Math.min(maxLineWidth, phrase.length);
+    var words = phrase.split(" ");
+
+    var row;
+    var lettersInRow = 0;
+    var isOnlyRow = true;
+    row = addRow(null, mod);
+
+    for (var j = 0; j < words.length; j++)
+    {
+        var word = words[j];
+        if (lettersInRow > 0)
+        {
+            addWord(row, " ");
+            lettersInRow++;
+        }
+        //check if word should be wrapped (shorter than lineWidth, but would make lettersInRow greater than lineWidth)
+        if (word.length <= lineWidth && word.length + lettersInRow > lineWidth)
+        {
+            row = addRow(row, mod);
+            addWord(row, word);
+            lettersInRow = word.length;
+            isOnlyRow = false;
+        }
+        //check if word should be broken up (longer than lineWidth)
+        else if (word.length > lineWidth)
+        {
+            addWord(row, word.substr(0, lineWidth-1) + "-");
+            row = addRow(row, mod);
+            addWord(row, word.substr(lineWidth-1));
+            lettersInRow = word.length - lineWidth + 1;
+            isOnlyRow = false;
+        }
+        else {
+            addWord(row, word);
+            lettersInRow += word.length;
+        }
+    }
+    sizeRow(row, isOnlyRow);
+}
+
+function sizeRow(row, isOnlyRow)
+{
+    if (isOnlyRow)
+    {
+        $(".letterCell", row).css("width", row.attr("lineWidth") + "%");
+    }
+    else{
+        var percent = row.children().length / maxLineWidth * 100 + "%";
+        row.width(percent);
+        $(".letterCell", row).css("width", 100 / row.children().length + "%");
+    }
+}
+
+function addRow(row, mod)
+{
+    if (row)
+        sizeRow(row);
+    var r = $("<div class='letterRow clearfix' lineWidth='" + mod + "'></div>");
+    letterContainer.append(r);
+    return r;
+}
+
+function addWord(row, word)
+{
+    console.log(word);
+    for (var i = 0; i < word.length; i++)
+    {
+        var div = $("<div class='letterCell'></div>");
+        if (word.charAt(i) == " "){
+            div.append($("<span class='showing'>&nbsp;</span>"));
+            div.append("<div style='background: none;'></div>")
+        }
+        else if (word.charAt(i) == "-"){
+            div.append($("<span style='opacity: 1;'>-</span>"));
+            div.append("<div style='background: none;'></div>")
+        }
+        else{
+            div.append($("<span>" + word.charAt(i) + "</span>"));
+            div.append("<div></div>")
+        }
+        row.append(div);
+    }
+}
+
 function startGame(){
 	var check = wordInput.val();
 	if (check.length > 1 && check.search(/[^a-zA-Z]+/ === -1))
 	{
-		word = check.toUpperCase();
+		currentWord = check.toUpperCase();
 		inputContainer.hide();
 		initGuessWord();
 	}
@@ -157,7 +231,7 @@ function showWord()
 
 function tryLetter(letter)
 {
-	if (word.indexOf(letter) != -1)
+	if (currentWord.indexOf(letter) != -1)
 	{
 		$.each($(".letterCell", letterContainer), function(i, obj)
 		{
@@ -188,7 +262,7 @@ function badGuess()
 
 function checkCompleted()
 {
-	if ($(".letterCell > span.showing", letterContainer).length == word.length)
+	if ($(".letterCell > span.showing", letterContainer).length == currentWord.length)
 		return true;
 	return false;
 }
