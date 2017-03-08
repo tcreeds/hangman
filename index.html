@@ -4,6 +4,7 @@
 <html>
 <head>
     <!--todo
+        hide letter palette when hangman takes damage
         lerp drawing
         ragdoll
 
@@ -16,21 +17,10 @@
     <script src="jquery-3.1.1.slim.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="main.css">
     <script src="drawman.js"></script>
- 	<script>
-	  	var gameDiv;
-	  	$(document).ready(function(){
-			gameDiv = $("#gameContainer");
-			init();
-			resize();
-		});
-
-		$(window).on("resize", resize);
-
-		function resize(){
-			gameDiv.height(gameDiv.width());
-            $canvas.height($canvas.width());
-		}
- 	</script>
+    <script src="inputScreen.js"></script>
+    <script src="gameScreen.js"></script>
+    <script src="letters.js"></script>
+    <script src="letterPad.js"></script>
  	<script src="hangman.js"></script>
 </head>
 
@@ -39,7 +29,7 @@
 		<div id="inputContainer">
 			<label for="wordInput">Enter your word:</label>
 	  		<input type="text" id="wordInput">
-			<button id="submitWord">Start Game</button>
+			<button id="submitWord">Start</button>
  		</div>
 		<div id="allLetters">
 			<div id="vowels" class="clearfix">

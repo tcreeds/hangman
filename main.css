@@ -101,6 +101,9 @@ input{
     cursor: pointer;
     width: 20%;
 }
+.gameOver .letter{
+    cursor: default;
+}
 .letter.right{
 	background: green;
 }
