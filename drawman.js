@@ -30,7 +30,7 @@ function setupDrawing()
 function drawStand()
 {
     ctx.strokeStyle = "#0000ff";
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 8;
 
     ctx.moveTo(150, 350);
     ctx.lineTo(150, 100);
@@ -38,7 +38,7 @@ function drawStand()
     ctx.lineTo(300, 130);
     ctx.stroke();
 
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 4;
 }
 
 function drawNextPart(index)

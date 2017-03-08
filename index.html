@@ -29,8 +29,10 @@
 
 		$(window).on("resize", resize);
 
+        var $canvas = $("canvas");
 		function resize(){
 			gameDiv.height(gameDiv.width());
+            $canvas.height($canvas.width());
 		}
  	</script>
  	<script src="hangman.js"></script>

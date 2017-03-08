@@ -12,10 +12,9 @@ button{
 }
 canvas{
     position: absolute;
+    width: 100%;
     top: 0;
-    bottom: 0;
     left: 0;
-    right: 0;
     z-index: -1;
     transform-origin:left;
     transform: scale(1);
@@ -23,6 +22,10 @@ canvas{
 }
 canvas.minimized{
     transform: scale(0.5);
+}
+input{
+    border-radius: 0.5vw;
+    border: 0.2vw solid blue;
 }
 #gameContainer{
 	width: 600px;
@@ -57,9 +60,9 @@ canvas.minimized{
 	position: absolute;
 	right: 0;
 	top: 0;
-	margin: 10px 0;
+	margin: 2% 0;
 	width: 50%;
-    padding: 15px 0;
+    padding: 2%;
 	transform: translateX(100%);
 	transition: transform 0.5s ease-out;
 }
@@ -151,17 +154,9 @@ canvas.minimized{
     clear: both;
 }
 
-/*#allLetters{
-
-}
-#vowels .letter,
-#consonants .letter {
-    width: 20%;
-}*/
-
-@media (max-width:480px){
+@media (max-width:600px){
 	.letter{
-		font-size: 8vw;
+		font-size: 7.5vw;
 	}
 	.letterCell{
 		font-size: 8vw;
