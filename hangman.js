@@ -9,6 +9,7 @@ var resetButton;
 var showLetters;
 var failedAttempts;
 var maxAttempts = 7;
+var $canvas;
 
 function init(){
 
@@ -18,6 +19,7 @@ function init(){
 	resetButton = $("#resetButton");
 	showLetters = $("#showLetters");
 	allLetters = $("#allLetters");
+    $canvas = $("canvas")
 
 	$(".allLettersToggle").on("click", function(){
         allLetters.toggleClass("showing")
@@ -52,6 +54,7 @@ function initGetWord(){
 	resetButton.hide();
 	$(".allLettersToggle").addClass("hidden");
 	allLetters.removeClass("showing");
+    wordInput.focus();
 }
 
 function initGuessWord(){
@@ -76,6 +79,7 @@ function initGuessWord(){
 
 	failedAttempts = 0;
 
+    $canvas.removeClass("minimized");
     setupDrawing();
 
 	resetButton.show();
@@ -98,12 +102,12 @@ function startGame(){
 		initGuessWord();
 	}
 	else {
-		wordInput.focus();
 		var newInput = wordInput.clone(true);
 		wordInput.remove();
 		$("#submitWord").before(newInput);
 		wordInput = newInput;
 		wordInput.addClass("shake");
+        wordInput.focus();
 	}
 }
 

@@ -78,10 +78,7 @@ input{
 #gameContainer #allLetters > .allLettersToggle.hidden{
 	display: none;
 }
-#vowels{
-	width: 60%;
-	margin: 0 auto;
-}
+#vowels,
 #consonants{
 	width: 95%;
 	margin: 0 auto;
@@ -104,10 +101,10 @@ input{
     cursor: pointer;
     width: 20%;
 }
-.right{
+.letter.right{
 	background: green;
 }
-.wrong{
+.letter.wrong{
 	background: red;
 }
 .letterCell{
@@ -136,6 +133,12 @@ input{
 	transform-origin: center left;
 	background: black;
 	transition: transform 0.4s ease;
+}
+.letterCell.right > span{
+    color: green;
+}
+.letterCell.wrong > span{
+    color: red;
 }
 .letterCell.expanded > div{
 	transform: scaleX(1);
