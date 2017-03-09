@@ -27,6 +27,11 @@ input{
     border-radius: 0.5vw;
     border: 0.2vw solid blue;
 }
+select,
+select:focus,
+input{
+    font-size: 16px;
+}
 #gameContainer{
 	width: 600px;
 	max-width: 95vw;
@@ -48,8 +53,9 @@ input{
 	margin: 10px auto;
 }
 #letterContainer{
-	position: relative;
-	top: 75%;
+	position: absolute;
+	bottom: 10%;
+    width: 100%;
 }
 #resetButton{
 	position:absolute;
@@ -166,14 +172,22 @@ input{
 }
 
 @media (max-width:600px){
-	.letter{
+    #allLetters{
+        width: 80%;
+    }
+    .letter{
 		font-size: 7.5vw;
+        width: 14%;
+        padding: 6px 0;
 	}
 	.letterCell{
 		font-size: 8vw;
 	}
     button{
-        font-size: 6vw;
+        font-size: 4vw;
+    }
+    canvas.minimized{
+        transform: translateX(-100%);
     }
 }
 
