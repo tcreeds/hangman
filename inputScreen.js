@@ -4,9 +4,12 @@ class InputScreen  {
         var t = this;
 
         inputContainer = $("#inputContainer");
+        inputContainer.hide();
     	wordInput = $("#wordInput");
 
-        $("#submitWord").on("click", this.startGame);
+        $("#submitWord").on("click", this.startGame.bind(this));
+        $("#sendWord").on("click", this.generateLink.bind(this));
+
     	wordInput.keyup(function(event){
         	if(event.keyCode == 13)
             	t.startGame();
@@ -22,22 +25,46 @@ class InputScreen  {
     exit(){
         inputContainer.hide();
     }
+
     startGame()
     {
-        var check = wordInput.val();
-    	if (check.length > 1 && check.search(/[a-zA-Z]/ === -1))
+        var check = this.validateWord();
+        if (check != -1)
+        {
+            currentWord = check;
+            switchState(GameState.GAME);
+        }
+    }
+    generateLink()
+    {
+        var check = this.validateWord();
+        if (check != -1)
+        {
+            var link = generateObfuscatedLink(check);
+            $("#linkText").text(link);
+        }
+    }
+    validateWord()
+    {
+        var check = wordInput.val().toUpperCase();
+    	if (check.length > 1)
     	{
-    		currentWord = check.toUpperCase();
-    		switchState(GameState.GAME);
+            var validated = true;
+            for (var i = 0; i < check.length; i++)
+            {
+                var code = check.charCodeAt(i);
+                if (code < 65 || code > 90)
+                    validated = false;
+            }
+            if (validated)
+    		      return check;
     	}
-    	else {
-    		var newInput = wordInput.clone(true);
-    		wordInput.remove();
-    		$("#submitWord").before(newInput);
-    		wordInput = newInput;
-    		wordInput.addClass("shake");
-            wordInput.focus();
-    	}
-
+        var newInput = wordInput.clone(true);
+        wordInput.remove();
+        $("#submitWord").before(newInput);
+        wordInput = newInput;
+        wordInput.addClass("shake");
+        wordInput.focus();
+        return -1;
     }
 }

@@ -35,6 +35,8 @@ function resize(){
 
 function init(){
 
+    var word = getObfuscatedWord();
+
 	resetButton = $("#resetButton");
     $canvas = $("canvas")
 
@@ -42,7 +44,12 @@ function init(){
     gameScreen = new GameScreen();
     inputScreen.init();
     gameScreen.init();
-    switchState(GameState.INPUT);
+    if (word == -1)
+        switchState(GameState.INPUT);
+    else {
+        currentWord = word;
+        switchState(GameState.GAME);
+    }
 }
 
 function switchState(targetState)
