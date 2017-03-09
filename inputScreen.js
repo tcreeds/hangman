@@ -53,7 +53,7 @@ class InputScreen  {
             for (var i = 0; i < check.length; i++)
             {
                 var code = check.charCodeAt(i);
-                if (code < 65 || code > 90)
+                if (!(check.charAt(i) == " " || (code >= 65 && code <= 90)))
                     validated = false;
             }
             if (validated)
