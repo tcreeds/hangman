@@ -4,7 +4,10 @@ class GameScreen {
         resetButton.on("click", function(){switchState(GameState.INPUT)});
     	resetButton.hide();
 
+        this.canvas = new HangmanCanvas();
+        this.canvas.init();
         this.phrase = new Phrase();
+        this.phrase.init();
         this.letterPad = new LetterPad();
         this.letterPad.init(this.onLetterSelect.bind(this));
     }
@@ -13,20 +16,19 @@ class GameScreen {
         var mod = Math.max(100 / currentWord.length, 100 / maxLineWidth);
 
     	this.phrase.addLetters(currentWord, mod);
-        setupDrawing();
+        this.canvas.enter();
 
         this.letterPad.enter();
 
     	failedAttempts = 0;
         gameEnded = false;
 
-        $canvas.removeClass("minimized");
     	resetButton.show();
     }
     exit()
     {
         gameDiv.removeClass("gameOver");
-        clearCanvas();
+        this.canvas.exit();
         this.phrase.exit();
         this.letterPad.exit();
     	resetButton.hide();
@@ -77,7 +79,7 @@ class GameScreen {
     }
     badGuess()
     {
-        drawNextPart(failedAttempts);
+        this.canvas.drawNextPart(failedAttempts);
         failedAttempts++;
         if (failedAttempts >= maxAttempts)
         {

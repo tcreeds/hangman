@@ -1,5 +1,9 @@
 class Phrase {
 
+    init()
+    {
+        letterContainer = $("#letterContainer");
+    }
     /*
         parses input word and creates layout
     */

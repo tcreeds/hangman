@@ -1,90 +1,96 @@
-var parts = [
-    drawHead,
-    drawBody,
-    drawLeftArm,
-    drawRightArm,
-    drawLeftLeg,
-    drawRightLeg
-];
-var canvas;
-var ctx;
-var canvasWidth;
-var canvasHeight;
 
-function clearCanvas()
-{
-    if (canvas)
-        canvas.width = canvas.width;
-}
 
-function setupDrawing()
-{
-    canvas = document.getElementById("drawCanvas");
-    ctx = canvas.getContext("2d");
-    canvas.width = canvasWidth = canvas.width;
-    canvasHeight = canvas.height;
+class HangmanCanvas {
 
-    drawStand();
-}
+    init()
+    {
+        this.canvas = document.getElementById("drawCanvas");
+        this.ctx = this.canvas.getContext("2d");
+        this.canvasWidth = this.canvas.width;
+        this.canvasHeight = this.canvas.height;
 
-function drawStand()
-{
-    ctx.strokeStyle = "#0000ff";
-    ctx.lineWidth = 8;
+        this.parts = [
+            this.drawHead,
+            this.drawBody,
+            this.drawLeftArm,
+            this.drawRightArm,
+            this.drawLeftLeg,
+            this.drawRightLeg
+        ];
 
-    ctx.moveTo(150, 350);
-    ctx.lineTo(150, 100);
-    ctx.lineTo(300, 100);
-    ctx.lineTo(300, 130);
-    ctx.stroke();
+    }
 
-    ctx.lineWidth = 4;
-}
+    enter()
+    {
+        this.drawStand();
+    }
 
-function drawNextPart(index)
-{
-    if (index >= 0 && index < parts.length)
-        parts[index].call();
-}
+    exit()
+    {
+        if (this.canvas)
+            this.canvas.width = this.canvas.width;
+        $(this.canvas).removeClass("minimized");
+    }
 
-function drawHead()
-{
-    ctx.moveTo(320, 150);
-    ctx.arc(300, 150, 20, 0, 6.282);
-    ctx.stroke();
-}
+    drawStand()
+    {
+        this.ctx.strokeStyle = "#0000ff";
+        this.ctx.lineWidth = 8;
 
-function drawBody()
-{
-    ctx.moveTo(300, 170);
-    ctx.lineTo(300, 260);
-    ctx.stroke();
-}
+        this.ctx.moveTo(150, 350);
+        this.ctx.lineTo(150, 100);
+        this.ctx.lineTo(300, 100);
+        this.ctx.lineTo(300, 130);
+        this.ctx.stroke();
 
-function drawRightArm()
-{
-    ctx.moveTo(300, 180);
-    ctx.lineTo(250, 210);
-    ctx.stroke();
-}
+        this.ctx.lineWidth = 4;
+    }
 
-function drawLeftArm()
-{
-    ctx.moveTo(300, 180);
-    ctx.lineTo(350, 210);
-    ctx.stroke();
-}
+    drawNextPart(index)
+    {
+        if (index >= 0 && index < this.parts.length)
+            this.parts[index].call(this);
+    }
 
-function drawRightLeg()
-{
-    ctx.moveTo(300, 260);
-    ctx.lineTo(250, 310);
-    ctx.stroke();
-}
+    drawHead()
+    {
+        this.ctx.moveTo(320, 150);
+        this.ctx.arc(300, 150, 20, 0, 6.282);
+        this.ctx.stroke();
+    }
 
-function drawLeftLeg()
-{
-    ctx.moveTo(300, 260);
-    ctx.lineTo(350, 310);
-    ctx.stroke();
+    drawBody()
+    {
+        this.ctx.moveTo(300, 170);
+        this.ctx.lineTo(300, 260);
+        this.ctx.stroke();
+    }
+
+    drawRightArm()
+    {
+        this.ctx.moveTo(300, 180);
+        this.ctx.lineTo(250, 210);
+        this.ctx.stroke();
+    }
+
+    drawLeftArm()
+    {
+        this.ctx.moveTo(300, 180);
+        this.ctx.lineTo(350, 210);
+        this.ctx.stroke();
+    }
+
+    drawRightLeg()
+    {
+        this.ctx.moveTo(300, 260);
+        this.ctx.lineTo(250, 310);
+        this.ctx.stroke();
+    }
+
+    drawLeftLeg()
+    {
+        this.ctx.moveTo(300, 260);
+        this.ctx.lineTo(350, 310);
+        this.ctx.stroke();
+    }
 }

@@ -8,6 +8,9 @@ class LetterPad {
                 $("canvas", gameDiv).toggleClass("minimized");
             });
 
+        showLetters = $("#showLetters");
+        allLetters = $("#allLetters");
+
         var vow = $("#vowels");
     	var con = $("#consonants");
 

@@ -35,12 +35,7 @@ function resize(){
 
 function init(){
 
-	inputContainer = $("#inputContainer");
-	wordInput = $("#wordInput");
-	letterContainer = $("#letterContainer");
 	resetButton = $("#resetButton");
-	showLetters = $("#showLetters");
-	allLetters = $("#allLetters");
     $canvas = $("canvas")
 
     inputScreen = new InputScreen();

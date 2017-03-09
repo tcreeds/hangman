@@ -2,6 +2,10 @@ class InputScreen  {
 
     init(){
         var t = this;
+
+        inputContainer = $("#inputContainer");
+    	wordInput = $("#wordInput");
+
         $("#submitWord").on("click", this.startGame);
     	wordInput.keyup(function(event){
         	if(event.keyCode == 13)
