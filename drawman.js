@@ -10,6 +10,7 @@ class HangmanCanvas {
         this.canvasHeight = this.canvas.height;
 
         this.parts = [
+            this.drawStand,
             this.drawHead,
             this.drawBody,
             this.drawLeftArm,
@@ -18,18 +19,41 @@ class HangmanCanvas {
             this.drawRightLeg
         ];
 
+        this.drawCounter = 0;
+        this.drawing = false;
+        this.animationLength = 750;
+
     }
 
     enter()
     {
-        this.drawStand();
+        this.drawing = true;
+        this.drawNextPart();
+        requestAnimationFrame(this.draw.bind(this));
     }
 
     exit()
     {
+        this.drawCounter = 0;
+        this.drawing = false;
         if (this.canvas)
             this.canvas.width = this.canvas.width;
         this.expand();
+    }
+
+    draw()
+    {
+        if (this.drawing)
+        {
+            this.canvas.width = this.canvas.width;
+            var lerp = Math.min((Date.now() - this.lastAnimateStartTime) / this.animationLength, 1);
+            for (var i = 0; i < this.drawCounter; i++)
+            {
+                if (i < this.parts.length)
+                    this.parts[i].call(this, i == this.drawCounter - 1 ? lerp : 1);
+            }
+            requestAnimationFrame(this.draw.bind(this));
+        }
     }
 
     expand()
@@ -42,65 +66,53 @@ class HangmanCanvas {
         $(this.canvas).addClass("minimized");
     }
 
-    drawStand()
+    drawNextPart()
+    {
+        this.drawCounter++;
+        this.lastAnimateStartTime = Date.now();
+    }
+
+    drawStand(lerpValue)
     {
         this.ctx.strokeStyle = "#0000ff";
         this.ctx.lineWidth = 8;
-
-        this.ctx.moveTo(150, 350);
-        this.ctx.lineTo(150, 100);
-        this.ctx.lineTo(300, 100);
-        this.ctx.lineTo(300, 130);
-        this.ctx.stroke();
+        var lerp1 = Math.min(lerpValue * 3, 1);
+        var lerp2 = Math.max(Math.min(lerpValue * 3 - 1, 1), 0);
+        var lerp3 = Math.max(Math.min(lerpValue * 3 - 2, 1), 0);
+        Animate.drawLine(this.ctx, 150, 350, 150, 100, lerp1)
+        Animate.drawLine(this.ctx, 150, 100, 300, 100, lerp2)
+        Animate.drawLine(this.ctx, 300, 100, 300, 130, lerp3);
 
         this.ctx.lineWidth = 4;
     }
 
-    drawNextPart(index)
+    drawHead(lerpValue)
     {
-        if (index >= 0 && index < this.parts.length)
-            this.parts[index].call(this);
+        Animate.drawCircle(this.ctx, 300, 150, 20, lerpValue)
     }
 
-    drawHead()
+    drawBody(lerpValue)
     {
-        this.ctx.moveTo(320, 150);
-        this.ctx.arc(300, 150, 20, 0, 6.282);
-        this.ctx.stroke();
+        Animate.drawLine(this.ctx, 300, 170, 300, 260, lerpValue)
     }
 
-    drawBody()
+    drawRightArm(lerpValue)
     {
-        this.ctx.moveTo(300, 170);
-        this.ctx.lineTo(300, 260);
-        this.ctx.stroke();
+        Animate.drawLine(this.ctx, 300, 180, 250, 210, lerpValue);
     }
 
-    drawRightArm()
+    drawLeftArm(lerpValue)
     {
-        this.ctx.moveTo(300, 180);
-        this.ctx.lineTo(250, 210);
-        this.ctx.stroke();
+        Animate.drawLine(this.ctx, 300, 180, 350, 210, lerpValue);
     }
 
-    drawLeftArm()
+    drawRightLeg(lerpValue)
     {
-        this.ctx.moveTo(300, 180);
-        this.ctx.lineTo(350, 210);
-        this.ctx.stroke();
+        Animate.drawLine(this.ctx, 300, 260, 250, 310, lerpValue);
     }
 
-    drawRightLeg()
+    drawLeftLeg(lerpValue)
     {
-        this.ctx.moveTo(300, 260);
-        this.ctx.lineTo(250, 310);
-        this.ctx.stroke();
-    }
-
-    drawLeftLeg()
-    {
-        this.ctx.moveTo(300, 260);
-        this.ctx.lineTo(350, 310);
-        this.ctx.stroke();
+        Animate.drawLine(this.ctx, 300, 260, 350, 310, lerpValue);
     }
 }

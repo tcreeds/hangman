@@ -93,7 +93,7 @@ class GameScreen {
             setTimeout(function(){
                 this.canvas.minimize();
                 this.letterPad.expand();
-            }.bind(this), 1200)
+            }.bind(this), 750 + this.canvas.animationLength + 200);
         }
     }
     checkCompleted()
