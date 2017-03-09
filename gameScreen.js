@@ -79,11 +79,21 @@ class GameScreen {
     }
     badGuess()
     {
-        this.canvas.drawNextPart(failedAttempts);
         failedAttempts++;
         if (failedAttempts >= maxAttempts)
         {
             this.gameOver(false);
+        }
+        else{
+            this.letterPad.minimize();
+            this.canvas.expand();
+            setTimeout(function(){
+                this.canvas.drawNextPart(failedAttempts-1);
+            }.bind(this), 750)
+            setTimeout(function(){
+                this.canvas.minimize();
+                this.letterPad.expand();
+            }.bind(this), 1200)
         }
     }
     checkCompleted()

@@ -29,7 +29,17 @@ class HangmanCanvas {
     {
         if (this.canvas)
             this.canvas.width = this.canvas.width;
+        this.expand();
+    }
+
+    expand()
+    {
         $(this.canvas).removeClass("minimized");
+    }
+
+    minimize()
+    {
+        $(this.canvas).addClass("minimized");
     }
 
     drawStand()
