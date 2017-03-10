@@ -19,7 +19,10 @@ class HangmanCanvas {
             this.drawRightLeg
         ];
 
-        this.drawCounter = 0;
+        this.drawSteps = hangmanData.strikes;
+        this.joints = hangmanData.joints;
+
+        this.drawCounter = -1;
         this.drawing = false;
         this.animationLength = 750;
 
@@ -28,13 +31,13 @@ class HangmanCanvas {
     enter()
     {
         this.drawing = true;
-        this.drawNextPart();
+        this.lastAnimateStartTime = Date.now();
         requestAnimationFrame(this.draw.bind(this));
     }
 
     exit()
     {
-        this.drawCounter = 0;
+        this.drawCounter = -1;
         this.drawing = false;
         if (this.canvas)
             this.canvas.width = this.canvas.width;
@@ -46,11 +49,27 @@ class HangmanCanvas {
         if (this.drawing)
         {
             this.canvas.width = this.canvas.width;
+
+
             var lerp = Math.min((Date.now() - this.lastAnimateStartTime) / this.animationLength, 1);
-            for (var i = 0; i < this.drawCounter; i++)
+            this.drawStand(this.drawCounter == -1 ? lerp : 1);
+            for (var i = 0; i <= this.drawCounter; i++)
             {
-                if (i < this.parts.length)
-                    this.parts[i].call(this, i == this.drawCounter - 1 ? lerp : 1);
+                if (i < this.drawSteps.length)
+                {
+                    var type = "line";
+                    if (this.drawSteps[i].length == 3)
+                        type = this.drawSteps[i][2];
+
+                    var joint1 = this.joints[this.drawSteps[i][0]];
+                    var joint2 = this.joints[this.drawSteps[i][1]];
+
+                    if (type == "line")
+                        Animate.drawLine(this.ctx, joint1.x, joint1.y, joint2.x, joint2.y, i == this.drawCounter ? lerp : 1);
+                    else if (type == "circle")
+                        Animate.drawCircle(this.ctx, joint1.x, joint1.y, joint2.y - joint1.y, i == this.drawCounter ? lerp : 1)
+                    this.ctx.stroke();
+                }
             }
             requestAnimationFrame(this.draw.bind(this));
         }
@@ -82,37 +101,7 @@ class HangmanCanvas {
         Animate.drawLine(this.ctx, 150, 350, 150, 100, lerp1)
         Animate.drawLine(this.ctx, 150, 100, 300, 100, lerp2)
         Animate.drawLine(this.ctx, 300, 100, 300, 130, lerp3);
-
+        this.ctx.stroke();
         this.ctx.lineWidth = 4;
-    }
-
-    drawHead(lerpValue)
-    {
-        Animate.drawCircle(this.ctx, 300, 150, 20, lerpValue)
-    }
-
-    drawBody(lerpValue)
-    {
-        Animate.drawLine(this.ctx, 300, 170, 300, 260, lerpValue)
-    }
-
-    drawRightArm(lerpValue)
-    {
-        Animate.drawLine(this.ctx, 300, 180, 250, 210, lerpValue);
-    }
-
-    drawLeftArm(lerpValue)
-    {
-        Animate.drawLine(this.ctx, 300, 180, 350, 210, lerpValue);
-    }
-
-    drawRightLeg(lerpValue)
-    {
-        Animate.drawLine(this.ctx, 300, 260, 250, 310, lerpValue);
-    }
-
-    drawLeftLeg(lerpValue)
-    {
-        Animate.drawLine(this.ctx, 300, 260, 350, 310, lerpValue);
     }
 }

@@ -6,8 +6,6 @@ class Animate {
             return;
         ctx.moveTo(x0, y0);
         ctx.lineTo(x0 + (x1 - x0) * t, y0 + (y1 - y0) * t)
-        ctx.stroke();
-        //console.log("line: " + t);
     }
 
     static drawCircle(ctx, x, y, radius, t=1)
@@ -16,7 +14,5 @@ class Animate {
             return;
         ctx.moveTo(x + radius, y);
         ctx.arc(x, y, radius, 0, 6.282 * t);
-        ctx.stroke();
-        //console.log("circ: " + t);
     }
 }
