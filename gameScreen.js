@@ -42,6 +42,9 @@ class GameScreen {
     	else
         {
             this.phrase.incorrect();
+            this.canvas.expand();
+            this.letterPad.minimize();
+            this.canvas.startRagdoll();
         }
         gameDiv.addClass("gameOver");
         gameEnded = true;

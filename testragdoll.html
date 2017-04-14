@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<script src="jquery-3.1.1.slim.min.js"></script>
+<link rel="stylesheet" type="text/css" href="main.css">
+<script src="data.js"></script>
+<script src="ragdoll.js"></script>
+<script src="animate.js"></script>
+<script src="drawman.js"></script>
+
+<canvas id="drawCanvas" width=600 height=600></canvas>
+
+<script>
+
+    var canvas = new HangmanCanvas();
+    canvas.init();
+    canvas.enter();
+    canvas.startRagdoll();
+</script>

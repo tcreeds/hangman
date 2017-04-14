@@ -9,7 +9,7 @@ var resetButton;
 var showLetters;
 var failedAttempts;
 var gameEnded = false;
-var maxAttempts = 7;
+var maxAttempts = 3;
 var maxLineWidth = 15;
 var $canvas;
 var GameState = {
@@ -35,7 +35,6 @@ function resize(){
 
 function init(){
 
-    var word = getObfuscatedWord();
 
 	resetButton = $("#resetButton");
     $canvas = $("canvas")
@@ -44,6 +43,9 @@ function init(){
     gameScreen = new GameScreen();
     inputScreen.init();
     gameScreen.init();
+    
+    var word = getObfuscatedWord();
+    
     if (word == -1)
         switchState(GameState.INPUT);
     else {
