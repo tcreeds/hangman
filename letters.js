@@ -32,9 +32,14 @@ class Phrase {
             //check if word should be broken up (longer than lineWidth)
             else if (word.length > lineWidth)
             {
-                this.addWord(row, word.substr(0, lineWidth-1) + "-");
-                row = this.addRow(row, mod);
-                this.addWord(row, word.substr(lineWidth-1));
+                while (word.length > lineWidth)
+                {
+                    var partialWord = word.substr(0, lineWidth-1);
+                    this.addWord(row, partialWord + "-");
+                    row = this.addRow(row, mod);
+                    word = word.substr(lineWidth-1);
+                }
+                this.addWord(row, word);
                 lettersInRow = word.length - lineWidth + 1;
                 isOnlyRow = false;
             }
