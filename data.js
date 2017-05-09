@@ -70,9 +70,9 @@ var hangmanData = {
     strikes: [
         ["head", "neck", "circle"],
         ["neck", "pelvis"],
-        ["shoulders", "rightHand"]/*,
+        ["shoulders", "rightHand"],
         ["shoulders", "leftHand"],
         ["pelvis", "rightFoot"],
-        ["pelvis", "leftFoot"]*/
+        ["pelvis", "leftFoot"]
     ]
 }

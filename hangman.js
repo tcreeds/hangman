@@ -9,7 +9,7 @@ var resetButton;
 var showLetters;
 var failedAttempts;
 var gameEnded = false;
-var maxAttempts = 3;
+var maxAttempts = 7;
 var maxLineWidth = 15;
 var $canvas;
 var GameState = {
