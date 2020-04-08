@@ -50,7 +50,7 @@ class RagDoll {
             var j1 = this.joints[conn[0]];
             var j = this.joints[conn[1]];
             var d = Math.sqrt(((j.x - j1.x) * (j.x - j1.x)) + ((j.y - j1.y) * (j.y - j1.y)));
-            console.log(j1.name + "-" + j.name + ": " + d);
+            //console.log(j1.name + "-" + j.name + ": " + d);
             j1.connections.push({
                 name: conn[1],
                 distance: d

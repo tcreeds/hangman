@@ -11,7 +11,7 @@ function generateObfuscatedLink(str)
         link = link.substr(0, link.indexOf("?"));
     }
     link += "?key=" + key + "&";
-    link += "str=" + word;
+    link += "word=" + word;
 
     return link;
 }
@@ -19,11 +19,10 @@ function generateObfuscatedLink(str)
 function getObfuscatedWord()
 {
     var key = getUrlParam(location.search, "key");
-    var str = getUrlParam(location.search, "str");
+    var str = getUrlParam(location.search, "str") || getUrlParam(location.search, "word");
     if (str != '')
     {
         var word = deobfuscate(str, key);
-        console.log(word);
         return word;
     }
     return -1;
